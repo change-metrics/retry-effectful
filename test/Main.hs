@@ -23,7 +23,7 @@ main =
 runRetryEff :: Eff '[Retry, IOE] a -> IO a
 runRetryEff = runEff . runRetry
 
-testRetrying :: '[Retry] :>> es => Eff es Int
+testRetrying :: (Retry :> es) => Eff es Int
 testRetrying = do
     retrying (constantDelay 100) chk (const $ pure 42)
   where
