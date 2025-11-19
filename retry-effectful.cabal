@@ -56,5 +56,5 @@ test-suite retry-effectful-test
     , base            <5
     , effectful-core  >=1.0 && <5.0
     , retry-effectful
-    , tasty           ^>=1.4.2
-    , tasty-hunit     ^>=0.10
+    , tasty           >=1.4.2
+    , tasty-hunit     >=0.10
