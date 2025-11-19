@@ -1,0 +1,14 @@
+name: Nix
+on:
+  pull_request: {}
+jobs:
+  tests:
+    name: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "actions/checkout@v2.4.0"
+      - uses: "cachix/install-nix-action@v20"
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - name: Run Test
+        run: "nix develop . --command cabal test --enable-tests -O0 --test-show-details=direct"
