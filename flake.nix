@@ -1,20 +1,16 @@
 {
   inputs = {
-    hspkgs.url =
-      "github:podenv/hspkgs/8596beefeb8471cbafae9bdefb6cb5de8dbc5627";
+    nixpkgs.url =
+      "github:NixOS/nixpkgs/abddaec7149b62550305c0d20cf9651f8413da77";
   };
-  outputs = { self, hspkgs }:
+  outputs = { self, nixpkgs }:
     let
-      pkgs = hspkgs.pkgs;
-      pkg = pkgs.hspkgs.callCabal2nix "retry-effectful" self { };
+      pkgs = import nixpkgs { system = "x86_64-linux"; };
+      pkg = pkgs.haskellPackages.callCabal2nix "retry-effectful" self { };
     in {
-      devShell."x86_64-linux" = pkgs.hspkgs.shellFor {
+      devShell."x86_64-linux" = pkgs.haskellPackages.shellFor {
         packages = p: [ pkg ];
-        buildInputs = with pkgs; [
-          cabal-install
-          haskell-language-server
-          fourmolu
-        ];
+        buildInputs = with pkgs; [ cabal-install ];
       };
     };
 }
